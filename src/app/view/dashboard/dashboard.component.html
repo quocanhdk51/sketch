@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="action-sidebar">
+    <div class="item-wrapper" [matMenuTriggerFor]="personMenu">
+      <mat-icon>person</mat-icon>
+    </div>
+  </div>
+  <mat-menu #personMenu="matMenu">
+    <div class="person-context-container" (click)="$event.stopPropagation()"></div>
+  </mat-menu>
+  <div class="action-container">
+    <div class="action-wrapper">
+      <button mat-flat-button (click)="onCreateSketch()">
+        <mat-icon>add</mat-icon>
+        <span class="action-text">Create new Sketch</span>
+      </button>
+      <mat-form-field>
+        <mat-label>
+          Search for Sketch
+        </mat-label>
+        <input type="text" matInput [formControl]="searchControl">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div #body class="body-container">
+    <div class="body-placeholder" *ngIf="isBodyPlaceHolderDisplay()">
+      <span class="icon-body-placeholder">{{ getBodyPlaceHolderIcon() }}</span>
+      <span class="text-body-placeholder">Opps! There is no sketch to be displayed.</span>
+    </div>
+    <div class="body-wrapper" *ngIf="!isBodyPlaceHolderDisplay()">
+      <div class="card" *ngFor="let sketch of sketches" (click)="onCardClick(sketch)">
+        <div class="card-image-container">
+          <img
+          class="card-image"
+          [src]="getImageSrc(sketch)"
+          [ngStyle]="{'background-color': sketch.background}"
+          >
+        </div>
+        <div class="card-body">
+          <div class="card-title">
+            <span>{{ sketch.name }}</span>
+          </div>
+          <div class="card-content">
+            <span>{{ sketch.width + "x" + sketch.height }}</span>
+            <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="onEditSketch(sketch)">
+                <mat-icon>edit</mat-icon>
+                Edit
+              </button>
+              <button mat-menu-item (click)="deleteSketch(sketch)">
+                <mat-icon>delete</mat-icon>
+                Delete
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

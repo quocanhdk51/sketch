@@ -1,0 +1,71 @@
+.container {
+  position: relative;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    position: relative;
+
+    .title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
+  .form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .size-container, .color-picker-container {
+      position: relative;
+      display: flex;
+      padding: 6px 0;
+
+      .item-container {
+        flex: auto 1 1;
+        display: inherit;
+        position: inherit;
+        align-items: center;
+
+        label {
+          font-size: 14px;
+        }
+
+        input {
+          width: 50px;
+          margin-left: 6px;
+          outline: none;
+          border: 2px solid gray;
+          border-radius: 6px;
+        }
+      }
+    }
+  }
+
+  .footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .mat-button {
+      color: #ff4081;
+    }
+
+    .mat-flat-button {
+      background-color: #ff4081;
+      color: white;
+    }
+  }
+}
+
+:host ::ng-deep.mat-form-field.mat-focused .mat-form-field-label {
+  color: #ff4081;
+}
+
+:host ::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #ff4081 !important;
+}

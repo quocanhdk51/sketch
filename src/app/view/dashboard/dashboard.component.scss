@@ -1,0 +1,303 @@
+@import '../../../color.scss';
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: $application-background;
+
+  .action-sidebar {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 99;
+
+    .item-wrapper {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 12px;
+      box-shadow: rgb(0 0 0 / 40%) 0px 12px 28px 0px, rgb(0 0 0 / 20%) 0px 2px 4px 0px, rgb(255 255 255 / 10%) 0px 0px 0px 1px inset;
+      overflow: hidden;
+
+      &:hover {
+        cursor: pointer;
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      &:first-child {
+        margin-top: 0px;
+      }
+    }
+  }
+
+  .action-container {
+    position: relative;
+    width: 100%;
+    height: 60px;
+
+    .action-wrapper {
+      position: relative;
+      width: 1824px;
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+
+  .body-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: auto;
+    background-color: transparent;
+
+    .body-placeholder {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .icon-body-placeholder {
+        font-size: calc(200px / 1.5);
+        height: 250px;
+        line-height: 200px;
+        text-align: center;
+        vertical-align: middle;
+      }
+
+      .text-body-placeholder {
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 32px;
+        text-align: center;
+      }
+    }
+
+    .body-wrapper {
+      position: relative;
+      width: 1824px;
+      margin: 0 auto;
+      justify-content: space-around;
+
+      .card {
+        position: relative;
+        width: 256px;
+        height: 256px;
+        margin: 16px 24px;
+        border-radius: 6px;
+        background-color: white;
+        box-sizing: border-box;
+        display: inline-block;
+        overflow: hidden;
+
+        &:hover {
+          cursor: pointer;
+          box-shadow: rgb(0 0 0 / 40%) 0px 12px 28px 0px, rgb(0 0 0 / 20%) 0px 2px 4px 0px, rgb(255 255 255 / 10%) 0px 0px 0px 1px inset;
+        }
+
+        .card-image-container {
+          position: relative;
+          width: 100%;
+          height: 70%;
+
+          .card-image {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .card-body {
+          position: relative;
+          width: calc(100% - 12px);
+          height: calc(30% - 12px);
+          padding: 0px 6px 12px 6px;
+          display: flex;
+          flex-direction: column;
+
+          .card-title {
+            position: relative;
+            flex-grow: 1;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 16px;
+            letter-spacing: 1.25px;
+            display: flex;
+
+            span {
+              flex: auto 1 1;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .card-content {
+            position: relative;
+            flex-grow: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+}
+
+.person-context-container {
+  width: 400px;
+  height: 400px;
+}
+
+::ng-deep.mat-menu-panel {
+  max-width: unset !important;
+}
+
+:host ::ng-deep.mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+:host ::ng-deep.mat-form-field-underline {
+  bottom: 0;
+}
+
+:host ::ng-deep.mat-form-field.mat-focused .mat-form-field-label {
+  color: #ff4081;
+}
+
+:host ::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: #ff4081 !important;
+}
+
+@media screen and (max-width: 615px) {
+  .container {
+    .action-container{
+      .action-wrapper {
+        width: calc(100% - 12px);
+        padding: 0 6px;
+        .action-text {
+          display: none;
+        }
+      }
+    }
+
+    .body-container {
+      .body-wrapper {
+        width: 268px;
+
+        .card {
+          width: 220px;
+          height: 220px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 616px) and (max-width: 687px) {
+  .container {
+    .action-container{
+      .action-wrapper {
+        width: 536px;
+      }
+    }
+
+    .body-container {
+      .body-wrapper {
+        width: 536px;
+
+        .card {
+          width: 220px;
+          height: 220px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 688px) and (max-width: 991px) {
+  .container {
+    .action-container{
+      .action-wrapper {
+        width: 608px;
+      }
+    }
+
+    .body-container {
+      .body-wrapper {
+        width: 608px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1295px) {
+  .container {
+    .action-container{
+      .action-wrapper {
+        width: 912px;
+      }
+    }
+
+    .body-container {
+      .body-wrapper {
+        width: 912px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1296px) and (max-width: 1599px) {
+  .container {
+    .action-container{
+      .action-wrapper {
+        width: 1216px;
+      }
+    }
+
+    .body-container {
+      .body-wrapper {
+        width: 1216px;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1903px) {
+  .container {
+    .action-container{
+      .action-wrapper {
+        width: 1520px;
+      }
+    }
+
+    .body-container {
+      .body-wrapper {
+        width: 1520px;
+      }
+    }
+  }
+}

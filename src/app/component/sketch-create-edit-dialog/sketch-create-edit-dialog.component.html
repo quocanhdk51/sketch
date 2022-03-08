@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="header">
+    <span class="title" *ngIf="isCreating">Create new Sketch</span>
+    <span class="title" *ngIf="!isCreating">Edit Sketch</span>
+  </div>
+  <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>
+        Name
+      </mat-label>
+      <input type="text" matInput formControlName="name">
+    </mat-form-field>
+    <div class="color-picker-container">
+      <div class="item-container">
+        <label>Background Color:</label>
+        <input type="color" formControlName="background">
+      </div>
+    </div>
+    <div class="size-container">
+      <div class="item-container">
+        <label>Width:</label>
+        <input type="number" min="0" formControlName="width">
+      </div>
+      <div class="item-container">
+        <label>Height:</label>
+        <input type="number" min="0" formControlName="height">
+      </div>
+    </div>
+    <div class="footer">
+      <button type="button" mat-button (click)="onCancel()">Cancel</button>
+      <button mat-flat-button>Submit</button>
+    </div>
+  </form>
+</div>

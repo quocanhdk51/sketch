@@ -1,0 +1,326 @@
+<mat-drawer-container
+class="drawer-container"
+>
+  <mat-drawer
+  #leftDrawer
+  [mode]="'over'"
+  class="left-drawer"
+  >
+    <div
+    class="file-drag-container"
+    appDragAndDrop
+    [fileType]="1"
+    (handleUploadedFiles)="handleFilesUploaded($event)"
+    >
+      <input
+      #fileUpload
+      class="fileUpload"
+      type="file"
+      id="fileUpload"
+      multiple
+      accept="image/*"
+      (change)="onChangeFileInput($event)">
+      <div
+      class="content-placeholder"
+      *ngIf="!isFilesUploaded()">
+        <button mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon class="upload-icon">file_upload</mat-icon>
+        <span class="text-title">Drag and Drop files here</span>
+        <span class="text-title">or</span>
+        <label
+        for="fileUpload"
+        class="upload-btn"
+        >Upload Images</label>
+      </div>
+      <div class="content-wrapper" *ngIf="isFilesUploaded()">
+        <div class="header">
+          <button mat-flat-button (click)="fileUpload.click()">
+            Upload Images
+          </button>
+          <button mat-icon-button>
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div class="body">
+          <img
+          [ngClass]="{'highlight': isImageHighlight(i)}"
+          [appImgFileReader]="file"
+          *ngFor="let file of files; let i = index"
+          alt="Image"
+          (click)="selectImage(i)"
+          >
+        </div>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="container">
+      <div class="body-container">
+        <mat-drawer-container
+        class="drawer-container"
+        [hasBackdrop]="false"
+        >
+          <mat-drawer
+          #rightDrawer
+          [mode]="'side'"
+          [position]="'end'"
+          [opened]="true"
+          >
+            <div class="right-sidenav-container">
+              <div class="nav-list">
+                <button
+                mat-icon-button
+                matTooltip="Pen"
+                (click)="changeDrawType(0)"
+                [ngClass]="{'button-highlight': drawType === 0}">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                mat-icon-button
+                matTooltip="Eraser"
+                (click)="changeDrawType(1)"
+                [ngClass]="{'button-highlight': drawType === 1}">
+                  <mat-icon>auto_fix_normal</mat-icon>
+                </button>
+                <button
+                mat-icon-button
+                matTooltip="Line"
+                (click)="changeDrawType(2)"
+                [ngClass]="{'button-highlight': drawType === 2}">
+                  <mat-icon>timeline</mat-icon>
+                </button>
+                <button
+                [matMenuTriggerFor]="rectangleMenu"
+                mat-icon-button matTooltip="Rectangle"
+                [ngClass]="{'button-highlight': drawType === 3}">
+                  <mat-icon class="material-icons-outlined">rectangle</mat-icon>
+                </button>
+                <mat-menu #rectangleMenu="matMenu" [xPosition]="'before'">
+                  <button
+                  mat-menu-item
+                  matTooltip="Outline"
+                  (click)="changeDrawType(3, false)"
+                  [ngClass]="{'button-highlight': drawType === 3 && !isFilled}">
+                    <mat-icon class="material-icons-outlined">rectangle</mat-icon>
+                  </button>
+                  <button
+                  mat-menu-item
+                  matTooltip="Filled"
+                  (click)="changeDrawType(3, true)"
+                  [ngClass]="{'button-highlight': drawType === 3 && isFilled}">
+                    <mat-icon>rectangle</mat-icon>
+                  </button>
+                </mat-menu>
+                <button
+                [matMenuTriggerFor]="circleMenu"
+                mat-icon-button
+                matTooltip="Circle"
+                [ngClass]="{'button-highlight': drawType === 4}">
+                  <mat-icon class="material-icons-outlined">circle</mat-icon>
+                </button>
+                <mat-menu #circleMenu="matMenu" [xPosition]="'before'">
+                  <button
+                  mat-menu-item
+                  matTooltip="Outline"
+                  (click)="changeDrawType(4, false)"
+                  [ngClass]="{'button-highlight': drawType === 4 && !isFilled}">
+                    <mat-icon class="material-icons-outlined">circle</mat-icon>
+                  </button>
+                  <button
+                  mat-menu-item
+                  matTooltip="Filled"
+                  (click)="changeDrawType(4, true)"
+                  [ngClass]="{'button-highlight': drawType === 4 && isFilled}">
+                    <mat-icon>circle</mat-icon>
+                  </button>
+                </mat-menu>
+                <button
+                [matMenuTriggerFor]="triangleMenu"
+                mat-icon-button
+                matTooltip="Triangle"
+                [ngClass]="{'button-highlight': drawType === 5}">
+                  <mat-icon svgIcon="triangle-shape-outline"></mat-icon>
+                </button>
+                <mat-menu #triangleMenu="matMenu" [xPosition]="'before'">
+                  <button
+                  mat-menu-item
+                  matTooltip="Outline"
+                  (click)="changeDrawType(5, false)"
+                  [ngClass]="{'button-highlight': drawType === 5 && !isFilled}">
+                    <mat-icon svgIcon="triangle-shape-outline"></mat-icon>
+                  </button>
+                  <button
+                  mat-menu-item
+                  matTooltip="Filled"
+                  (click)="changeDrawType(5, true)"
+                  [ngClass]="{'button-highlight': drawType === 5 && isFilled}">
+                    <mat-icon svgIcon="triangle-shape"></mat-icon>
+                  </button>
+                </mat-menu>
+                <button
+                [matMenuTriggerFor]="diamondMenu"
+                mat-icon-button
+                matTooltip="Diamond"
+                [ngClass]="{'button-highlight': drawType === 6}">
+                  <mat-icon svgIcon="diamond-shape-outline"></mat-icon>
+                </button>
+                <mat-menu #diamondMenu="matMenu" [xPosition]="'before'">
+                  <button
+                  mat-menu-item
+                  matTooltip="Outline"
+                  (click)="changeDrawType(6, false)"
+                  [ngClass]="{'button-highlight': drawType === 6 && !isFilled}">
+                    <mat-icon svgIcon="diamond-shape-outline"></mat-icon>
+                  </button>
+                  <button
+                  mat-menu-item
+                  matTooltip="Filled"
+                  (click)="changeDrawType(6, true)"
+                  [ngClass]="{'button-highlight': drawType === 6 && isFilled}">
+                    <mat-icon svgIcon="diamond-shape"></mat-icon>
+                  </button>
+                </mat-menu>
+                <button
+                [matMenuTriggerFor]="textMenu"
+                mat-icon-button
+                matTooltip="Text"
+                [ngClass]="{'button-highlight': drawType === 7}">
+                  <mat-icon class="material-icons-outlined">border_color</mat-icon>
+                </button>
+                <mat-menu #textMenu="matMenu" [xPosition]="'before'">
+                  <button
+                  mat-menu-item
+                  matTooltip="Outline"
+                  (click)="changeDrawType(7, false)"
+                  [ngClass]="{'button-highlight': drawType === 7 && !isFilled}">
+                    <mat-icon class="material-icons-outlined">border_color</mat-icon>
+                  </button>
+                  <button
+                  mat-menu-item
+                  matTooltip="Filled"
+                  (click)="changeDrawType(7, true)"
+                  [ngClass]="{'button-highlight': drawType === 7 && isFilled}">
+                    <mat-icon>border_color</mat-icon>
+                  </button>
+                </mat-menu>
+                <button
+                mat-icon-button
+                matTooltip="Image"
+                [ngClass]="{'button-highlight': drawType === 8}"
+                (click)="changeDrawType(8)"
+                [disabled]="!isImageLoaded">
+                  <mat-icon class="material-icons-outlined">image</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-drawer>
+          <mat-drawer-content>
+            <div class="canvas-container">
+              <canvas
+              #canvas
+              class="canvas"
+              appCanvas
+              [width]="boardWidth"
+              [height]="boardHeight"
+              [shapes]="shapes"
+              [offSetLeft]="padding"
+              [offSetTop]="padding"
+              [strokeColor]="strokeColor"
+              [strokeWidth]="strokeWidth"
+              [canvasBackground]="canvasBackground"
+              [drawType]="drawType"
+              [isFilled]="isFilled"
+              (finishedDrawing)="handleFinishedDraw($event)"
+              ></canvas>
+            </div>
+            <div *ngIf="paletteOn" class="palette-container" cdkDrag>
+              <div class="header-container" cdkDragHandle>
+                <div class="header">Palette</div>
+                <button
+                mat-icon-button
+                (click)="togglePalette()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <mat-divider></mat-divider>
+              <form class="form" [formGroup]="paletteForm">
+                <label class="label">Board Transform</label>
+                <div class="size-container">
+                  <div class="item-container">
+                    <label>Width:</label>
+                    <input type="number" min="0" formControlName="boardWidth">
+                  </div>
+                  <div class="item-container">
+                    <label>Height:</label>
+                    <input type="number" min="0" formControlName="boardHeight">
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+                <label class="label">Appearance</label>
+                <div class="color-picker-container">
+                  <div class="item-container">
+                    <label>Color:</label>
+                    <input type="color" formControlName="color">
+                  </div>
+                  <div class="item-container">
+                    <label>Background Color:</label>
+                    <input type="color" formControlName="background">
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+                <label class="label">Pen Size</label>
+                <div class="stroke-width-container">
+                  <mat-slider formControlName="penSize" min="1" max="100" step="1" value="2"></mat-slider>
+                </div>
+              </form>
+            </div>
+          </mat-drawer-content>
+        </mat-drawer-container>
+      </div>
+      <mat-toolbar>
+        <button
+        mat-icon-button
+        (click)="onHome()"
+        >
+          <mat-icon>home</mat-icon>
+        </button>
+        <button
+        mat-icon-button
+        [ngClass]="{'button-highlight': leftDrawer.opened}"
+        (click)="leftDrawer.toggle()"
+        >
+          <mat-icon>photo_library</mat-icon>
+        </button>
+        <button
+        mat-icon-button
+        (click)="onSave()" [disabled]="saved()">
+          <mat-icon>save</mat-icon>
+        </button>
+        <button
+        mat-icon-button
+        (click)="undo()"
+        >
+          <mat-icon>undo</mat-icon>
+        </button>
+        <div class="spacer"></div>
+        <button
+        mat-icon-button
+        [ngClass]="{'button-highlight': paletteOn}"
+        (click)="togglePalette()"
+        >
+          <mat-icon>palette</mat-icon>
+        </button>
+        <button
+        mat-icon-button
+        [ngClass]="{'button-highlight': rightDrawer.opened}"
+        (click)="rightDrawer.toggle()"
+        >
+          <mat-icon>widgets</mat-icon>
+        </button>
+      </mat-toolbar>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

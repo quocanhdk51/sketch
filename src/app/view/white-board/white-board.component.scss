@@ -1,0 +1,291 @@
+@import '../../../color.scss';
+
+.drawer-container {
+  height: 100%;
+
+  .left-drawer {
+    width: 400px;
+    background-color: white;
+
+    .file-drag-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      .fileUpload {
+        display: none;
+      }
+
+      .content-placeholder {
+        position: inherit;
+        width: inherit;
+        height: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .upload-icon {
+          font-size: 100px;
+          height: 100px;
+          width: 100px;
+        }
+
+        .mat-icon-button {
+          position: absolute;
+          top: 12px;
+          right: 12px;
+        }
+
+        .text-title {
+          font-size: 20px;
+          font-weight: 600;
+          color: #38424c;
+          padding: 6px 0;
+        }
+
+        .upload-btn {
+          font-size: 16px;
+          font-weight: 400;
+          color: white;
+          padding: 12px;
+          background-color: #ff4081;
+          border-radius: 36px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .content-wrapper {
+        position: inherit;
+        width: inherit;
+        height: inherit;
+
+        .header {
+          position: relative;
+          width: calc(100% - 24px);
+          height: 60px;
+          padding: 0 12px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .mat-flat-button {
+            background-color: #ff4081;
+            color: white;
+          }
+
+          &::after {
+            content: "";
+            height: 1px;
+            width: 90%;
+            background-color: rgb(201, 201, 201);
+            position: absolute;
+            bottom: 0;
+            left: 5%;
+            right: 5%;
+          }
+        }
+
+        .body {
+          position: relative;
+          width: 100%;
+          height: calc(100% - 60px);
+          overflow: auto;
+        }
+      }
+
+      img {
+        position: relative;
+        width: calc(100% - 64px);
+        margin: 32px;
+        object-fit: contain;
+        border-radius: 6px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        &.highlight {
+          box-shadow: rgb(0 0 0 / 40%) 0px 12px 28px 0px, rgb(0 0 0 / 20%) 0px 2px 4px 0px, rgb(255 255 255 / 10%) 0px 0px 0px 1px inset;
+        }
+      }
+    }
+  }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: $application-background;
+
+  .mat-toolbar {
+    background-color: $application-primary;
+
+    .spacer {
+      flex: auto 1 1;
+    }
+  }
+
+  .body-container {
+    width: calc(100% - 12px);
+    height: calc(100% - 52px);
+    padding: 6px;
+
+    .mat-drawer-container {
+      background-color: transparent;
+
+      .mat-drawer {
+        border: unset;
+        width: 66px;
+        background-color: inherit;
+
+        &:not(.mat-drawer-side) {
+          box-shadow: unset;
+        }
+
+        .right-sidenav-container {
+          position: relative;
+          width: calc(100% - 6px);
+          height: calc(100% - 6px);
+          margin-left: 6px;
+          background-color: white;
+          padding: 3px 0 3px 0;
+          border-radius: 3px;
+          overflow-y: auto;
+          overflow-x: hidden;
+
+          .nav-list {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+          }
+        }
+      }
+
+      .mat-drawer-content {
+        .canvas-container {
+          position: relative;
+          background-color: transparent;
+          overflow: auto;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}
+
+.palette-container {
+  bottom: 16px;
+  right: 16px;
+}
+
+.image-container {
+  bottom: 16px;
+  left: 6px;
+}
+
+.palette-container, .image-container {
+  position: absolute;
+  width: 280px;
+  background-color: white;
+  border-radius: 3px;
+  padding: 16px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  .mat-divider {
+    margin: 12px 0px;
+  }
+
+  .header-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: move;
+
+    .header {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: .5px;
+    }
+  }
+
+  .form {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+    overflow: auto;
+
+    .label {
+      font-size: 18px;
+      font-weight: normal;
+      letter-spacing: .5px;
+      margin-bottom: 6px;
+    }
+
+    .size-container, .color-picker-container, .stroke-width-container {
+      position: relative;
+      display: flex;
+
+      .item-container {
+        flex: auto 1 1;
+        display: inherit;
+        position: inherit;
+        align-items: center;
+
+        label {
+          font-size: 14px;
+        }
+
+        input {
+          width: 50px;
+          margin-left: 6px;
+          outline: none;
+          border: 2px solid gray;
+          border-radius: 6px;
+        }
+      }
+    }
+
+    .stroke-width-container {
+      flex-direction: column;
+
+      .mat-slider {
+        margin: 0px 3px;
+      }
+    }
+  }
+}
+
+.mat-icon-button, .mat-menu-item {
+  border-radius: 3px;
+
+  &.button-highlight {
+    background-color: black;
+    color: white;
+    border-radius: 0px;
+  }
+}
+
+::ng-deep.mat-menu-panel {
+  min-width: unset !important;
+}
+
+::ng-deep.mat-menu-item .mat-icon {
+  margin-right: unset !important;
+  color: unset;
+}
+
+:host ::ng-deep.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 40px;
+  padding: 0px;
+}
