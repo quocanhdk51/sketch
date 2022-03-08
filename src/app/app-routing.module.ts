@@ -2,15 +2,18 @@ import { DashboardComponent } from './view/dashboard/dashboard.component';
 import { WhiteBoardComponent } from './view/white-board/white-board.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MsalGuard } from '@azure/msal-angular';
 
 const routes: Routes = [
   {
     path: 'whiteboard',
-    component: WhiteBoardComponent
+    component: WhiteBoardComponent,
+    canActivate: [MsalGuard]
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [MsalGuard]
   },
   {
     path: '',
@@ -23,8 +26,12 @@ const routes: Routes = [
   }
 ];
 
+const isIframe = window !== window.parent && !window.opener;
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {
+    initialNavigation: !isIframe ? 'enabled' : 'disabled'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

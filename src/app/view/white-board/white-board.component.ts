@@ -98,27 +98,29 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe(
       (data) => this.isImageLoaded = data
     );
-    this.crudService.getSketch(this.sketchID).subscribe(
-      (sketch) => {
-        this.sketch = sketch;
-        this.appCanvas.renderDone$.pipe(
-          filter(state => state === true),
-          take(1)
-        ).subscribe(
-          () => {
-            this.paletteForm.patchValue({
-              boardWidth: this.sketch.width,
-              boardHeight: this.sketch.height,
-              background: this.sketch.background
-            });
-            this.appCanvas.renderImageURL(this.sketch.imageURL as string);
-          }
-        );
-      },
-      (error: HttpErrorResponse) => {
-        this.toastSv.error(error.error.message);
-      }
-    );
+    if (this.sketchID > 0) {
+      this.crudService.getSketch(this.sketchID).subscribe(
+        (sketch) => {
+          this.sketch = sketch;
+          this.appCanvas.renderDone$.pipe(
+            filter(state => state === true),
+            take(1)
+          ).subscribe(
+            () => {
+              this.paletteForm.patchValue({
+                boardWidth: this.sketch.width,
+                boardHeight: this.sketch.height,
+                background: this.sketch.background
+              });
+              this.appCanvas.renderImageURL(this.sketch.imageURL as string);
+            }
+          );
+        },
+        (error: HttpErrorResponse) => {
+          this.toastSv.error(error.error.message);
+        }
+      );
+    }
   }
 
   public ngOnDestroy(): void {
