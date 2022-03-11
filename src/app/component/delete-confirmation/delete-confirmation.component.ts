@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DeleteConfirmation } from 'src/app/model/delete-confirmation.model';
+import { DeleteConfirmation } from '../../model/delete-confirmation.model';
 
 @Component({
   selector: 'app-delete-confirmation',
@@ -14,14 +14,14 @@ export class DeleteConfirmationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DeleteConfirmation
   ) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
   }
 
-  onClose(): void {
+  public onClose(): void {
     this.dialogRef.close();
   }
 
-  onDelete(): void {
+  public onDelete(): void {
     this.dialogRef.close(true);
   }
 }

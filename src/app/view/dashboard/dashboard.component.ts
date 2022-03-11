@@ -1,3 +1,5 @@
+import { AzureProfile } from './../../model/azure-profile.model';
+import { AzureService } from './../../service/azure.service';
 import { Subject } from 'rxjs';
 import { SketchCreateEditDialogComponent } from './../../component/sketch-create-edit-dialog/sketch-create-edit-dialog.component';
 import { Sketch } from './../../model/canvas.model';
@@ -7,9 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SketchCreateEditDialogData } from 'src/app/model/sketch-create-edit.model';
 import { FormControl } from '@angular/forms';
 import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { DeleteConfirmationComponent } from 'src/app/component/delete-confirmation/delete-confirmation.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { page_size } from 'src/app/constant/common.constant';
 
@@ -26,12 +26,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   private _destroying$: Subject<void> = new Subject();
   private currentPage: number = 0;
   private isLastPage: boolean = false;
-  private isFisrtPage: boolean = true;
   private _body!: HTMLDivElement;
+  private profile!: AzureProfile;
+  private photo!: string;
 
   constructor(
-    private router: Router,
     private crudService: CrudService,
+    private azureService: AzureService,
     private toastSv: ToastrService,
     public dialog: MatDialog
   ) { }
@@ -46,6 +47,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       (value: string) => {
         this.reloadData(value.trim());
       }
+    );
+    this.azureService.getProfileInfo().subscribe(
+      (data) => this.profile = data,
+      (error: HttpErrorResponse) => {
+        this.toastSv.error(error.error.message);
+      }
+    );
+    this.azureService.getPhoto().subscribe(
+      (data) => this.photo = data
     );
   }
 
@@ -63,12 +73,36 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this._destroying$.unsubscribe();
   }
 
+  get userProfile(): AzureProfile {
+    return this.profile;
+  }
+
+  get userPhoto(): string {
+    return this.photo;
+  }
+
+  get noUserProfileAndPhoto(): boolean {
+    return this.photo == null && this.profile == null;
+  }
+
+  get isOnlyProfileLoaded(): boolean {
+    return this.photo == null && this.profile != null;
+  }
+
+  get isPhotoLoaded(): boolean {
+    return this.photo != null;
+  }
+
   public isBodyPlaceHolderDisplay(): boolean {
     return this.sketches.length === 0;
   }
 
   public getBodyPlaceHolderIcon(): string {
     return "(>_<)";
+  }
+
+  public getAvatarReplacementFromProfile(): string {
+    return this.profile.givenName[0].toUpperCase() + this.profile.surname[0].toUpperCase();
   }
 
   public onCreateSketch(): void {
@@ -89,52 +123,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  public onEditSketch(sketch: Sketch): void {
-    const data: SketchCreateEditDialogData = {
-      isCreating: false,
-      sketch: sketch
-    };
-    const dialogRef = this.dialog.open(
-      SketchCreateEditDialogComponent,
-      {
-        data: data
-      }
-    );
-    dialogRef.afterClosed().subscribe((data) => {
-      if (data) {
-        this.reloadDashBoard();
-        this.toastSv.success(`Sketch '${data.name}' is edited successfully`);
-      }
-    });
-  }
-
-
-  public deleteSketch(sketch: Sketch): void {
-    const dialogRef = this.dialog.open(DeleteConfirmationComponent);
-    dialogRef.afterClosed().subscribe(
-      (data) => {
-        if (data) {
-          this.crudService.deleteSketch(sketch.id as number).subscribe(
-            (_sketch) => {
-              this.reloadDashBoard();
-            },
-            (error: HttpErrorResponse) => {
-              this.toastSv.error(error.error.message);
-            }
-          );
-        }
-      }
-    );
-  }
-
-  public getImageSrc(sketch: Sketch): string {
-    return (sketch.imageURL) ? sketch.imageURL : "";
-  }
-
-  public onCardClick(sketch: Sketch): void {
-    this.router.navigate(['/whiteboard', {
-      id: sketch.id as number
-    }]);
+  public onCardEventSuccess(): void {
+    this.reloadDashBoard();
   }
 
   private reloadDashBoard(): void {
@@ -150,7 +140,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.currentPage = 0;
     this.crudService.searchForSketchByPaging(value, this.currentPage, page_size).subscribe(
       (data) => {
-        this.isFisrtPage = data.first;
         this.isLastPage = data.last;
         this.sketches = data.content;
         this.sketches.sort((a, b) => (a.id as number) - (b.id as number));
@@ -166,7 +155,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.currentPage += 1;
       this.crudService.searchForSketchByPaging(this.searchControl.value, this.currentPage, page_size).subscribe(
         (data) => {
-          this.isFisrtPage = data.first;
           this.isLastPage = data.last;
           this.sketches.push(...data.content);
           this.sketches.sort((a, b) => (a.id as number) - (b.id as number));

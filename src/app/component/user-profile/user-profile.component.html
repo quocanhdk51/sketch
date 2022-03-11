@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="detail">
+    <div class="background">
+      <div class="curtain"></div>
+      <div class="dummy-curtain"></div>
+    </div>
+    <div class="content">
+      <div class="profile-container">
+        <div class="name">{{ profile.displayName }}</div>
+        <div class="job">{{ profile.jobTitle }}</div>
+        <div class="phone">{{ profile.mobilePhone }}</div>
+      </div>
+      <div class="image-container">
+        <div class="image">
+          <mat-icon *ngIf="noUserProfileAndPhoto">person</mat-icon>
+          <div *ngIf="isOnlyProfileLoaded">{{ getAvatarReplacementFromProfile() }}</div>
+          <img *ngIf="isPhotoLoaded" [src]="photo">
+        </div>
+      </div>
+    </div>
+  </div>
+  <button mat-raised-button (click)="onSignout()">
+    <mat-icon>logout</mat-icon>
+    Signout
+  </button>
+</div>

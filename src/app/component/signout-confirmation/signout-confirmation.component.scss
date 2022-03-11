@@ -1,0 +1,46 @@
+.container {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    position: relative;
+
+    .title {
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
+
+  .body {
+    position: relative;
+    flex: auto 1 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .mat-icon {
+      font-size: 100px;
+      height: 100px;
+      width: 100px;
+    }
+  }
+
+  .footer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .mat-button {
+      color: #ff4081;
+    }
+
+    .mat-flat-button {
+      background-color: #ff4081;
+      color: white;
+    }
+  }
+}

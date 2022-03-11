@@ -31,6 +31,9 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { MsalGuard, MsalInterceptor, MsalModule, MsalRedirectComponent } from '@azure/msal-angular';
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { AZURE_AUTH_CONFIG } from './core/auth-azure-configs';
+import { UserProfileComponent } from './component/user-profile/user-profile.component';
+import { CardComponent } from './component/card/card.component';
+import { SignoutConfirmationComponent } from './component/signout-confirmation/signout-confirmation.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -43,7 +46,10 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     ImgFileReaderDirective,
     DashboardComponent,
     SketchCreateEditDialogComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    UserProfileComponent,
+    CardComponent,
+    SignoutConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +95,7 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
         interactionType: InteractionType.Redirect,
         protectedResourceMap: new Map([
           [AZURE_AUTH_CONFIG.ProtectedResourceMap, [AZURE_AUTH_CONFIG.UserScope]],
-          [environment.config.appURL, ["api://12b65564-3f8d-45aa-8989-d0ba296d0186/Files.read"]]
+          [environment.config.appURL, [AZURE_AUTH_CONFIG.AppIDUrl]]
         ])
       }
     )

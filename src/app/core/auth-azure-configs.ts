@@ -6,5 +6,6 @@ export const AZURE_AUTH_CONFIG = {
   ProtectedResourceMap: 'https://graph.microsoft.com/v1.0/me',
   PostLogoutRedirectUri: origin,
   RedirectUri: window.location.origin,
-  UserScope: 'user.read'
+  UserScope: 'user.read',
+  AppIDUrl: environment.config.appIdUrl
 };
