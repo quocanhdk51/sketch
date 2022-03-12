@@ -1,6 +1,6 @@
 {
   "/sketch-api": {
-    "target": "http://sketch-api.azurewebsites.net/api/v1/sketch/",
+    "target": "https://sketch-api.azurewebsites.net/api/v1/sketch/",
     "secure": false,
     "changeOrigin": true,
     "pathRewrite": {
