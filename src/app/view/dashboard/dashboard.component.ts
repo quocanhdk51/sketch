@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('body', {static: true}) bodyElementRef!: ElementRef;
   public sketches: Sketch[] = [];
   public searchControl: FormControl = new FormControl('');
+  public isLoadingItem: boolean = false;
 
   private _destroying$: Subject<void> = new Subject();
   private currentPage: number = 0;
@@ -94,7 +95,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public isBodyPlaceHolderDisplay(): boolean {
-    return this.sketches.length === 0;
+    return this.sketches.length === 0 && !this.isLoadingItem;
   }
 
   public getBodyPlaceHolderIcon(): string {
@@ -137,14 +138,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private reloadData(value: string): void {
+    this.isLoadingItem = true;
     this.currentPage = 0;
     this.crudService.searchForSketchByPaging(value, this.currentPage, page_size).subscribe(
       (data) => {
         this.isLastPage = data.last;
         this.sketches = data.content;
         this.sketches.sort((a, b) => (a.id as number) - (b.id as number));
+        this.isLoadingItem = false;
       },
       (error: HttpErrorResponse) => {
+        this.isLoadingItem = false;
         this.toastSv.error(error.error.message);
       }
     );
@@ -152,14 +156,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private loadNextPage(): void {
     if (!this.isLastPage) {
+      this.isLoadingItem = true;
       this.currentPage += 1;
       this.crudService.searchForSketchByPaging(this.searchControl.value, this.currentPage, page_size).subscribe(
         (data) => {
           this.isLastPage = data.last;
           this.sketches.push(...data.content);
           this.sketches.sort((a, b) => (a.id as number) - (b.id as number));
+          this.isLoadingItem = false;
         },
         (error: HttpErrorResponse) => {
+          this.isLoadingItem = false;
           this.toastSv.error(error.error.message);
         }
       );

@@ -1,3 +1,4 @@
+import { LoadingService } from './../../service/loading.service';
 import { CrudService } from './../../service/crud.service';
 import { Sketch } from './../../model/canvas.model';
 import { stroke_color, stroke_width, background, default_board_width, default_board_height } from '../../constant/white-board.constant';
@@ -50,7 +51,8 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
     private iconRegistry: MatIconRegistry,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder,
-    private toastSv: ToastrService
+    private toastSv: ToastrService,
+    private loadingService: LoadingService
   ) {
     const routeId = this.route.snapshot.paramMap.get("id");
     if (routeId == null || !this.isNumber(routeId)) {
@@ -99,8 +101,10 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
       (data) => this.isImageLoaded = data
     );
     if (this.sketchID > 0) {
+      this.loadingService.loading$.next(true);
       this.crudService.getSketch(this.sketchID).subscribe(
         (sketch) => {
+          this.loadingService.loading$.next(false);
           this.sketch = sketch;
           this.appCanvas.renderDone$.pipe(
             filter(state => state === true),
@@ -117,6 +121,7 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
           );
         },
         (error: HttpErrorResponse) => {
+          this.loadingService.loading$.next(false);
           this.toastSv.error(error.error.message);
         }
       );
@@ -163,6 +168,7 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public onSave(): void {
     const imageURL = this.appCanvas.getImageURL();
+    this.loadingService.loading$.next(true);
     this.crudService.updateSketch({
       id: this.sketch.id,
       name: this.sketch.name,
@@ -172,9 +178,12 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
       imageURL: imageURL
     }).subscribe(
       (sketch) => {
+        this.loadingService.loading$.next(false);
         this.sketch = sketch;
+        this.toastSv.success(`Successfully saved sketch: ${this.sketch.name}`);
       },
       (error: HttpErrorResponse) => {
+        this.loadingService.loading$.next(false);
         this.toastSv.error(error.error.message);
       }
     );

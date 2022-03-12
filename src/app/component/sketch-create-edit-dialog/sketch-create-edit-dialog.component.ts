@@ -1,3 +1,4 @@
+import { LoadingService } from './../../service/loading.service';
 import { SketchErrorResponse } from 'src/app/model/sketch-response.model';
 import { Sketch } from './../../model/canvas.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -26,6 +27,7 @@ export class SketchCreateEditDialogComponent implements OnInit, OnDestroy {
     private crudService: CrudService,
     private fb: FormBuilder,
     private toastSv: ToastrService,
+    private loadingService: LoadingService,
     public dialogRef: MatDialogRef<SketchCreateEditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: SketchCreateEditDialogData
   ) {
@@ -76,6 +78,7 @@ export class SketchCreateEditDialogComponent implements OnInit, OnDestroy {
   }
 
   private handleOnCreate(): void {
+    this.loadingService.loading$.next(true);
     const sketch: Sketch = {
       name: this.form.get('name')?.value as string,
       background: this.form.get('background')?.value as string,
@@ -84,15 +87,18 @@ export class SketchCreateEditDialogComponent implements OnInit, OnDestroy {
     };
     this.crudService.saveNewSketch(sketch).subscribe(
       (sketch) => {
+        this.loadingService.loading$.next(false);
         this.dialogRef.close(sketch);
       },
       (error: HttpErrorResponse) => {
+        this.loadingService.loading$.next(false);
         this.toastSv.error(error.error.message);
       }
     );
   }
 
   private handleOnEdit(): void {
+    this.loadingService.loading$.next(true);
     const sketch: Sketch = {
       id: this.data.sketch?.id,
       imageURL: this.data.sketch?.imageURL,
@@ -103,9 +109,11 @@ export class SketchCreateEditDialogComponent implements OnInit, OnDestroy {
     };
     this.crudService.updateSketch(sketch).subscribe(
       (sketch) => {
+        this.loadingService.loading$.next(false);
         this.dialogRef.close(sketch);
       },
       (error: HttpErrorResponse) => {
+        this.loadingService.loading$.next(false);
         this.toastSv.error(error.error.message);
       }
     );

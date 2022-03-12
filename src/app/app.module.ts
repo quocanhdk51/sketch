@@ -34,6 +34,7 @@ import { AZURE_AUTH_CONFIG } from './core/auth-azure-configs';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { CardComponent } from './component/card/card.component';
 import { SignoutConfirmationComponent } from './component/signout-confirmation/signout-confirmation.component';
+import { LoadingComponent } from './component/loading/loading.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -49,7 +50,8 @@ const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigato
     DeleteConfirmationComponent,
     UserProfileComponent,
     CardComponent,
-    SignoutConfirmationComponent
+    SignoutConfirmationComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

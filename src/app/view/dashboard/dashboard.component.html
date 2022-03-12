@@ -36,6 +36,7 @@
       [sketch]="sketch"
       (onEventSuccess)="onCardEventSuccess()"
       *ngFor="let sketch of sketches"></app-card>
+      <app-loading *ngIf="isLoadingItem"></app-loading>
     </div>
   </div>
 </div>
