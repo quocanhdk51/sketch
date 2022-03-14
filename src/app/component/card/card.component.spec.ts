@@ -19,7 +19,7 @@ import { of, throwError } from 'rxjs';
 
 const createSpyObj = jasmine.createSpyObj;
 
-fdescribe('CardComponent', () => {
+describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
   let crudServiceMock: CrudService;

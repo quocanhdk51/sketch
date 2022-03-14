@@ -6,7 +6,7 @@
     <mat-icon>delete_forever</mat-icon>
   </div>
   <div class="footer">
-    <button mat-button (click)="onClose()">Cancel</button>
-    <button mat-flat-button (click)="onDelete()">Delete</button>
+    <button data-testid="closeBtn" mat-button (click)="onClose()">Cancel</button>
+    <button data-testid="deleteBtn" mat-flat-button (click)="onDelete()">Delete</button>
   </div>
 </div>
