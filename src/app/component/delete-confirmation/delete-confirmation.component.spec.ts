@@ -62,5 +62,5 @@ describe('DeleteConfirmationComponent', () => {
     const deleteBtn = getElementByCss(fixture, '[data-testid="deleteBtn"]');
     deleteBtn.nativeElement.click();
     expect(matDialogRefMock.close).toHaveBeenCalledWith(true);
-  })
+  });
 });
