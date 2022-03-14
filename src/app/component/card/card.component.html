@@ -12,15 +12,15 @@
     </div>
     <div class="card-content">
       <span>{{ sketch.width + "x" + sketch.height }}</span>
-      <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
+      <button data-testid="moreBtn" mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="onEditSketch(sketch)">
+        <button data-testid="editBtn" mat-menu-item (click)="onEditSketch(sketch)">
           <mat-icon>edit</mat-icon>
           Edit
         </button>
-        <button mat-menu-item (click)="deleteSketch(sketch)">
+        <button data-testid="deleteBtn" mat-menu-item (click)="deleteSketch(sketch)">
           <mat-icon>delete</mat-icon>
           Delete
         </button>

@@ -57,7 +57,6 @@ export class CardComponent implements OnInit {
     });
   }
 
-
   public deleteSketch(sketch: Sketch): void {
     const dialogRef = this.dialog.open(DeleteConfirmationComponent);
     dialogRef.afterClosed().subscribe(
