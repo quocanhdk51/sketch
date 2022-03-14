@@ -7,7 +7,7 @@ import { DeleteConfirmationComponent } from './delete-confirmation.component';
 
 const createSpyObj = jasmine.createSpyObj;
 
-fdescribe('DeleteConfirmationComponent', () => {
+describe('DeleteConfirmationComponent', () => {
   let component: DeleteConfirmationComponent;
   let fixture: ComponentFixture<DeleteConfirmationComponent>;
   let matDialogRefMock: MatDialogRef<DeleteConfirmationComponent>;
