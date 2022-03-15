@@ -16,7 +16,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 const createSpyObj = jasmine.createSpyObj;
 
-fdescribe('SketchCreateEditDialogComponent', () => {
+describe('SketchCreateEditDialogComponent', () => {
   let component: SketchCreateEditDialogComponent;
   let fixture: ComponentFixture<SketchCreateEditDialogComponent>;
   let crudServiceMock: CrudService;

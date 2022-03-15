@@ -5,21 +5,21 @@
       <div class="dummy-curtain"></div>
     </div>
     <div class="content">
-      <div class="profile-container">
+      <div class="profile-container" *ngIf="profile">
         <div class="name">{{ profile.displayName }}</div>
         <div class="job">{{ profile.jobTitle }}</div>
         <div class="phone">{{ profile.mobilePhone }}</div>
       </div>
       <div class="image-container">
         <div class="image">
-          <mat-icon *ngIf="noUserProfileAndPhoto">person</mat-icon>
-          <div *ngIf="isOnlyProfileLoaded">{{ getAvatarReplacementFromProfile() }}</div>
-          <img *ngIf="isPhotoLoaded" [src]="photo">
+          <mat-icon data-testid="no-user-profile-and-photo" *ngIf="noUserProfileAndPhoto">person</mat-icon>
+          <div data-testid="user-profile" *ngIf="isOnlyProfileLoaded">{{ getAvatarReplacementFromProfile() }}</div>
+          <img data-testid="photo" *ngIf="isPhotoLoaded" [src]="photo">
         </div>
       </div>
     </div>
   </div>
-  <button mat-raised-button (click)="onSignout()">
+  <button data-testid="signoutBtn" mat-raised-button (click)="onSignout()">
     <mat-icon>logout</mat-icon>
     Sign out
   </button>

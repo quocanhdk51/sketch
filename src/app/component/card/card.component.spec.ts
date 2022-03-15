@@ -26,7 +26,7 @@ describe('CardComponent', () => {
   let routerMock: Router;
   let toastSvMock: ToastrService;
   let dialogMock: MatDialog;
-  let dialogRefSpyObj = {
+  let dialogRefObj = {
     afterClosed: () => of(true),
   };
   let loader: HarnessLoader;
@@ -103,7 +103,7 @@ describe('CardComponent', () => {
     component.sketch = sketchMock;
     fixture.detectChanges();
     loader = TestbedHarnessEnvironment.loader(fixture);
-    (dialogMock.open as jasmine.Spy).and.returnValue(dialogRefSpyObj);
+    (dialogMock.open as jasmine.Spy).and.returnValue(dialogRefObj);
   });
 
   it('should create', () => {
