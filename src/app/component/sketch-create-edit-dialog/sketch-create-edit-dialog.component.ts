@@ -1,5 +1,4 @@
 import { LoadingService } from './../../service/loading.service';
-import { SketchErrorResponse } from 'src/app/model/sketch-response.model';
 import { Sketch } from './../../model/canvas.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CrudService } from './../../service/crud.service';
@@ -20,7 +19,6 @@ export class SketchCreateEditDialogComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public isCreating: boolean = true;
 
-  private _formSubmit$: Subject<any> = new Subject();
   private _destroying$: Subject<void> = new Subject();
 
   constructor(
@@ -41,18 +39,6 @@ export class SketchCreateEditDialogComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this._formSubmit$.pipe(
-      takeUntil(this._destroying$),
-      tap(() => this.form.markAsDirty()),
-      switchMap(
-        () => this.form.statusChanges.pipe(
-          startWith(this.form.status),
-          filter((status) => status !== 'PENDING'),
-          take(1)
-        )
-      ),
-      filter((status) => status === 'VALID')
-    ).subscribe((_validationSuccessful) => this.handleOnSubmit());
   }
 
   public ngOnDestroy(): void {
@@ -61,7 +47,7 @@ export class SketchCreateEditDialogComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    this._formSubmit$.next();
+    this.handleOnSubmit();
   }
 
   public onCancel(): void {

@@ -8,7 +8,7 @@ import { SignoutConfirmationComponent } from './signout-confirmation.component';
 
 const createSpyObj = jasmine.createSpyObj;
 
-fdescribe('SignoutConfirmationComponent', () => {
+describe('SignoutConfirmationComponent', () => {
   let component: SignoutConfirmationComponent;
   let fixture: ComponentFixture<SignoutConfirmationComponent>;
   let matDialogRefMock: MatDialogRef<SignoutConfirmationComponent>;
