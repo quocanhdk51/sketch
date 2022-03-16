@@ -7,7 +7,6 @@ import { FileType } from '../model/drag-and-drop.model';
 export class DragAndDropDirective {
   @Output() public handleUploadedFiles: EventEmitter<File[]> = new EventEmitter();
   @Input() public fileType: FileType = FileType.Any;
-  @Input() public isHoverEffectOn: boolean = true;
 
   constructor() {}
 

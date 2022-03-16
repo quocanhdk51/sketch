@@ -13,7 +13,7 @@ import { SignoutConfirmationComponent } from '../signout-confirmation/signout-co
 
 const createSpyObj = jasmine.createSpyObj;
 
-fdescribe('UserProfileComponent', () => {
+describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
   let fixture: ComponentFixture<UserProfileComponent>;
   let msalServiceMock: MsalService;
