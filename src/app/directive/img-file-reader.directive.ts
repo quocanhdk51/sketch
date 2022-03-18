@@ -1,10 +1,10 @@
-import { Directive, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Directive, Input, ElementRef, AfterViewInit, OnInit } from '@angular/core';
 import { getFileDataURL } from '../function-common/function.common';
 
 @Directive({
   selector: '[appImgFileReader]'
 })
-export class ImgFileReaderDirective implements AfterViewInit {
+export class ImgFileReaderDirective implements OnInit, AfterViewInit {
   @Input() appImgFileReader: File | null = null;
   @Input() placeHolder = "";
 
@@ -15,6 +15,9 @@ export class ImgFileReaderDirective implements AfterViewInit {
     private el: ElementRef,
   ) {
     this.image = this.el.nativeElement;
+  }
+
+  ngOnInit(): void {
     this.load();
   }
 

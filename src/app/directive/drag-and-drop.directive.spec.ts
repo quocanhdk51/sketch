@@ -21,7 +21,7 @@ class TestDragAndDropComponent {
   }
 }
 
-fdescribe('Directive: DragAndDrop', () => {
+describe('Directive: DragAndDrop', () => {
   let component: TestDragAndDropComponent;
   let fixture: ComponentFixture<TestDragAndDropComponent>;
   let divEl: DebugElement;

@@ -1,6 +1,6 @@
 import { getFileDataURL } from './../function-common/function.common';
 import { stroke_color, stroke_width, background } from './../constant/white-board.constant';
-import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, Output, enableProdMode, Renderer2, AfterViewChecked } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2, AfterViewChecked } from '@angular/core';
 import { DrawType, Line, Point, Shape, TextPoint } from '../model/canvas.model';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { delayWhen, switchMap, take } from 'rxjs/operators'
@@ -49,6 +49,10 @@ export class CanvasDirective implements AfterViewInit, AfterViewChecked {
   public ngAfterViewInit(): void {
     this.setCanvasStyle();
     this.render();
+  }
+
+  get imageRef(): HTMLImageElement | null {
+    return this.image;
   }
 
   @HostListener('touchstart', ['$event'])
@@ -244,6 +248,7 @@ export class CanvasDirective implements AfterViewInit, AfterViewChecked {
     );
     this.finalCanvas.width = this.canvas.width;
     this.finalCanvas.height = this.canvas.height;
+    this.renderer.addClass(this.finalCanvas, 'final-canvas');
     this.renderer.setStyle(this.finalCanvas, 'z-index', `${parseInt(this.canvas.style.zIndex) - 1}`);
     this.renderer.setStyle(this.finalCanvas, 'position', 'absolute');
     this.renderer.setStyle(this.finalCanvas, 'left', `${this.canvas.offsetLeft}px`);
@@ -267,6 +272,7 @@ export class CanvasDirective implements AfterViewInit, AfterViewChecked {
     );
     this.backgroundCanvas.width = this.canvas.width;
     this.backgroundCanvas.height = this.canvas.height;
+    this.renderer.addClass(this.backgroundCanvas, 'background-canvas');
     this.renderer.setStyle(this.backgroundCanvas, 'z-index', `${parseInt(this.canvas.style.zIndex) - 2}`);
     this.renderer.setStyle(this.backgroundCanvas, 'position', 'absolute');
     this.renderer.setStyle(this.backgroundCanvas, 'left', `${this.canvas.offsetLeft}px`);
@@ -375,7 +381,7 @@ export class CanvasDirective implements AfterViewInit, AfterViewChecked {
 
   private getX(event: MouseEvent | TouchEvent): number {
     return (event instanceof MouseEvent)
-      ? (event as MouseEvent).offsetX
+      ? (event as MouseEvent).clientX - this.offSetLeft - this.canvas.offsetLeft
       : ((event as TouchEvent).targetTouches.length > 0)
       ? (event as TouchEvent).targetTouches[0].pageX - this.offSetLeft - this.canvas.offsetLeft
       : (event as TouchEvent).changedTouches[0].pageX - this.offSetLeft - this.canvas.offsetLeft;
@@ -383,7 +389,7 @@ export class CanvasDirective implements AfterViewInit, AfterViewChecked {
 
   private getY(event: MouseEvent | TouchEvent): number {
     return (event instanceof MouseEvent)
-    ? (event as MouseEvent).offsetY
+    ? (event as MouseEvent).clientY - this.offSetTop - this.canvas.offsetTop
     : ((event as TouchEvent).targetTouches.length > 0)
     ? (event as TouchEvent).targetTouches[0].pageY - this.offSetTop - this.canvas.offsetTop
     : (event as TouchEvent).changedTouches[0].pageY - this.offSetTop - this.canvas.offsetTop;
@@ -532,7 +538,6 @@ export class CanvasDirective implements AfterViewInit, AfterViewChecked {
         );
         break;
       }
-      default: break;
     }
   }
 
@@ -732,7 +737,6 @@ export class CanvasDirective implements AfterViewInit, AfterViewChecked {
             );
             break;
           }
-          default: break;
         }
       }
     );
