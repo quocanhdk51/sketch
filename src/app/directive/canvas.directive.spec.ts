@@ -66,7 +66,7 @@ class TestCanvasComponent implements AfterViewInit {
   }
 }
 
-fdescribe('Directive: Canvas', () => {
+describe('Directive: Canvas', () => {
   let component: TestCanvasComponent;
   let fixture: ComponentFixture<TestCanvasComponent>;
   let canvasEl: DebugElement;
@@ -566,6 +566,15 @@ fdescribe('Directive: Canvas', () => {
         component.drawType = 10;
         fixture.detectChanges();
         simulateDrawingWithMouseDown();
+        expect(component.shapes.length).toBe(0);
+      });
+
+      it('should not handle drawing on click', () => {
+        component.drawType = DrawType.Line;
+        canvasEl.nativeElement.dispatchEvent(new MouseEvent('mousedown', { clientX: start.x, clientY: start.y }));
+        fixture.detectChanges();
+        canvasEl.nativeElement.dispatchEvent(new MouseEvent('mouseup', { clientX: start.x, clientY: start.y }));
+        fixture.detectChanges();
         expect(component.shapes.length).toBe(0);
       })
     });
