@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 describe('AzureService', () => {
   let service: AzureService;
-  let httpTestingController: HttpTestingController;
+  let controller: HttpTestingController;
   const resourceUrl = AZURE_AUTH_CONFIG.ProtectedResourceMap;
 
   beforeEach(() => {
@@ -23,11 +23,11 @@ describe('AzureService', () => {
       ]
     });
     service = TestBed.inject(AzureService);
-    httpTestingController = TestBed.inject(HttpTestingController);
+    controller = TestBed.inject(HttpTestingController);
   });
 
   afterEach(() => {
-    httpTestingController.verify();
+    controller.verify();
   });
 
   it('should be created', () => {
@@ -52,7 +52,7 @@ describe('AzureService', () => {
     service.getProfileInfo().subscribe(
       (val) => result = val
     );
-    const req = httpTestingController.expectOne(resourceUrl);
+    const req = controller.expectOne(resourceUrl);
     expect(req.request.method).toEqual('GET');
     req.flush(response);
     expect(result).toEqual(response);
@@ -76,7 +76,7 @@ describe('AzureService', () => {
       }
     );
 
-    httpTestingController.expectOne(resourceUrl).error(errorEvent, { status, statusText });
+    controller.expectOne(resourceUrl).error(errorEvent, { status, statusText });
     if (!actualError) {
       throw new Error('Error needs to be defined');
     }
@@ -91,7 +91,7 @@ describe('AzureService', () => {
     service.getPhoto().subscribe(
       (val) => result = val
     );
-    const req = httpTestingController.expectOne(resourceUrl + '/photo/$value');
+    const req = controller.expectOne(resourceUrl + '/photo/$value');
     expect(req.request.method).toEqual('GET');
     req.flush(response);
     expect(result).toEqual(response);
@@ -115,7 +115,7 @@ describe('AzureService', () => {
       }
     );
 
-    httpTestingController.expectOne(resourceUrl + '/photo/$value').error(errorEvent, { status, statusText });
+    controller.expectOne(resourceUrl + '/photo/$value').error(errorEvent, { status, statusText });
     if (!actualError) {
       throw new Error('Error needs to be defined');
     }
