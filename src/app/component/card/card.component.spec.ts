@@ -4,7 +4,7 @@ import { SketchCreateEditDialogComponent } from './../sketch-create-edit-dialog/
 import { Sketch } from './../../model/canvas.model';
 import { ToastrService } from 'ngx-toastr';
 import { CrudService } from './../../service/crud.service';
-import { ComponentFixture, fakeAsync, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CardComponent } from './card.component';
 import { Router } from '@angular/router';

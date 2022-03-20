@@ -71,13 +71,15 @@ class="drawer-container"
             <div class="right-sidenav-container">
               <div class="nav-list">
                 <button
+                data-testid="sketchBtn"
                 mat-icon-button
-                matTooltip="Pen"
+                matTooltip="Sketch"
                 (click)="changeDrawType(0)"
                 [ngClass]="{'button-highlight': drawType === 0}">
                   <mat-icon>edit</mat-icon>
                 </button>
                 <button
+                data-testid="eraserBtn"
                 mat-icon-button
                 matTooltip="Eraser"
                 (click)="changeDrawType(1)"
@@ -85,6 +87,7 @@ class="drawer-container"
                   <mat-icon>auto_fix_normal</mat-icon>
                 </button>
                 <button
+                data-testid="lineBtn"
                 mat-icon-button
                 matTooltip="Line"
                 (click)="changeDrawType(2)"
@@ -92,6 +95,7 @@ class="drawer-container"
                   <mat-icon>timeline</mat-icon>
                 </button>
                 <button
+                data-testid="rectangleBtn"
                 [matMenuTriggerFor]="rectangleMenu"
                 mat-icon-button matTooltip="Rectangle"
                 [ngClass]="{'button-highlight': drawType === 3}">
@@ -99,6 +103,7 @@ class="drawer-container"
                 </button>
                 <mat-menu #rectangleMenu="matMenu" [xPosition]="'before'">
                   <button
+                  data-testid="rectangleBtn-notfilled"
                   mat-menu-item
                   matTooltip="Outline"
                   (click)="changeDrawType(3, false)"
@@ -106,6 +111,7 @@ class="drawer-container"
                     <mat-icon class="material-icons-outlined">rectangle</mat-icon>
                   </button>
                   <button
+                  data-testid="rectangleBtn-filled"
                   mat-menu-item
                   matTooltip="Filled"
                   (click)="changeDrawType(3, true)"
@@ -114,6 +120,7 @@ class="drawer-container"
                   </button>
                 </mat-menu>
                 <button
+                data-testid="circleBtn"
                 [matMenuTriggerFor]="circleMenu"
                 mat-icon-button
                 matTooltip="Circle"
@@ -122,6 +129,7 @@ class="drawer-container"
                 </button>
                 <mat-menu #circleMenu="matMenu" [xPosition]="'before'">
                   <button
+                  data-testid="circleBtn-notfilled"
                   mat-menu-item
                   matTooltip="Outline"
                   (click)="changeDrawType(4, false)"
@@ -129,6 +137,7 @@ class="drawer-container"
                     <mat-icon class="material-icons-outlined">circle</mat-icon>
                   </button>
                   <button
+                  data-testid="circleBtn-filled"
                   mat-menu-item
                   matTooltip="Filled"
                   (click)="changeDrawType(4, true)"
@@ -137,6 +146,7 @@ class="drawer-container"
                   </button>
                 </mat-menu>
                 <button
+                data-testid="triangleBtn"
                 [matMenuTriggerFor]="triangleMenu"
                 mat-icon-button
                 matTooltip="Triangle"
@@ -145,6 +155,7 @@ class="drawer-container"
                 </button>
                 <mat-menu #triangleMenu="matMenu" [xPosition]="'before'">
                   <button
+                  data-testid="triangleBtn-notfilled"
                   mat-menu-item
                   matTooltip="Outline"
                   (click)="changeDrawType(5, false)"
@@ -152,6 +163,7 @@ class="drawer-container"
                     <mat-icon svgIcon="triangle-shape-outline"></mat-icon>
                   </button>
                   <button
+                  data-testid="triangleBtn-filled"
                   mat-menu-item
                   matTooltip="Filled"
                   (click)="changeDrawType(5, true)"
@@ -160,6 +172,7 @@ class="drawer-container"
                   </button>
                 </mat-menu>
                 <button
+                data-testid="diamondBtn"
                 [matMenuTriggerFor]="diamondMenu"
                 mat-icon-button
                 matTooltip="Diamond"
@@ -168,6 +181,7 @@ class="drawer-container"
                 </button>
                 <mat-menu #diamondMenu="matMenu" [xPosition]="'before'">
                   <button
+                  data-testid="diamondBtn-notfilled"
                   mat-menu-item
                   matTooltip="Outline"
                   (click)="changeDrawType(6, false)"
@@ -175,6 +189,7 @@ class="drawer-container"
                     <mat-icon svgIcon="diamond-shape-outline"></mat-icon>
                   </button>
                   <button
+                  data-testid="diamondBtn-filled"
                   mat-menu-item
                   matTooltip="Filled"
                   (click)="changeDrawType(6, true)"
@@ -183,6 +198,7 @@ class="drawer-container"
                   </button>
                 </mat-menu>
                 <button
+                data-testid="textBtn"
                 [matMenuTriggerFor]="textMenu"
                 mat-icon-button
                 matTooltip="Text"
@@ -191,6 +207,7 @@ class="drawer-container"
                 </button>
                 <mat-menu #textMenu="matMenu" [xPosition]="'before'">
                   <button
+                  data-testid="textBtn-notfilled"
                   mat-menu-item
                   matTooltip="Outline"
                   (click)="changeDrawType(7, false)"
@@ -198,6 +215,7 @@ class="drawer-container"
                     <mat-icon class="material-icons-outlined">border_color</mat-icon>
                   </button>
                   <button
+                  data-testid="textBtn-filled"
                   mat-menu-item
                   matTooltip="Filled"
                   (click)="changeDrawType(7, true)"
@@ -206,6 +224,7 @@ class="drawer-container"
                   </button>
                 </mat-menu>
                 <button
+                data-testid="imageBtn"
                 mat-icon-button
                 matTooltip="Image"
                 [ngClass]="{'button-highlight': drawType === 8}"
@@ -239,6 +258,7 @@ class="drawer-container"
               <div class="header-container" cdkDragHandle>
                 <div class="header">Palette</div>
                 <button
+                data-testid="togglePaletteBtn"
                 mat-icon-button
                 (click)="togglePalette()"
                 >
@@ -282,6 +302,7 @@ class="drawer-container"
       </div>
       <mat-toolbar>
         <button
+        data-testid="homeBtn"
         mat-icon-button
         (click)="onHome()"
         >
@@ -300,6 +321,7 @@ class="drawer-container"
           <mat-icon>save</mat-icon>
         </button>
         <button
+        data-testid="undoBtn"
         mat-icon-button
         (click)="undo()"
         >

@@ -100,7 +100,7 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe(
       (data) => this.isImageLoaded = data
     );
-    if (this.sketchID > 0) {
+    if (this.sketchID >= 0) {
       this.loadingService.loading$.next(true);
       this.crudService.getSketch(this.sketchID).subscribe(
         (sketch) => {
@@ -180,6 +180,7 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
       (sketch) => {
         this.loadingService.loading$.next(false);
         this.sketch = sketch;
+        this.isSaved = true;
         this.toastSv.success(`Successfully saved sketch: ${this.sketch.name}`);
       },
       (error: HttpErrorResponse) => {
@@ -187,7 +188,6 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.toastSv.error(error.error.message);
       }
     );
-    this.isSaved = true;
   }
 
   public saved(): boolean {
