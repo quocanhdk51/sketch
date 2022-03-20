@@ -180,6 +180,7 @@ describe('CardComponent', () => {
     const [del] = await menu.getItems({selector: `[data-testid="deleteBtn"]`});
     await del.click();
     expect(component.onEventSuccess.emit).toHaveBeenCalled();
+    expect(toastSvMock.success).toHaveBeenCalled();
   });
 
   it('should handle error deleting sketch',async () => {

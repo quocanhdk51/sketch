@@ -13,7 +13,7 @@
   </mat-menu>
   <div class="action-container">
     <div class="action-wrapper">
-      <button mat-flat-button (click)="onCreateSketch()">
+      <button data-testid="create-btn" mat-flat-button (click)="onCreateSketch()">
         <mat-icon>add</mat-icon>
         <span class="action-text">Create new Sketch</span>
       </button>
@@ -26,7 +26,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div #body class="body-container">
+  <div data-testid="body" #body class="body-container">
     <div class="body-placeholder" *ngIf="isBodyPlaceHolderDisplay()">
       <span class="icon-body-placeholder">{{ getBodyPlaceHolderIcon() }}</span>
       <span class="text-body-placeholder">Opps! There is no sketch to be displayed.</span>

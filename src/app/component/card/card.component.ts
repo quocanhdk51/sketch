@@ -64,6 +64,7 @@ export class CardComponent implements OnInit {
         if (data) {
           this.crudService.deleteSketch(sketch.id as number).subscribe(
             (_sketch) => {
+              this.toastSv.success(`Sketch '${data.name}' is deleted successfully`);
               this.onEventSuccess.emit();
             },
             (error: HttpErrorResponse) => {

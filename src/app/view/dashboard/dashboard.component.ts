@@ -1,6 +1,6 @@
 import { AzureProfile } from './../../model/azure-profile.model';
 import { AzureService } from './../../service/azure.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { SketchCreateEditDialogComponent } from './../../component/sketch-create-edit-dialog/sketch-create-edit-dialog.component';
 import { Sketch } from './../../model/canvas.model';
 import { CrudService } from './../../service/crud.service';
@@ -39,8 +39,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.reloadDashBoard();
-    this.searchControl.valueChanges.pipe(
+    this.searchControlChange$.pipe(
       takeUntil(this._destroying$),
       debounceTime(300),
       distinctUntilChanged()
@@ -49,6 +48,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         this.reloadData(value.trim());
       }
     );
+    this.reloadDashBoard();
+  }
+
+  public ngAfterViewInit(): void {
     this.azureService.getProfileInfo().subscribe(
       (data) => this.profile = data,
       (error: HttpErrorResponse) => {
@@ -58,9 +61,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.azureService.getPhoto().subscribe(
       (data) => this.photo = data
     );
-  }
-
-  public ngAfterViewInit(): void {
     this._body = this.bodyElementRef.nativeElement;
     this._body.onscroll = () => {
       if (this._body.offsetHeight + this._body.scrollTop >= this._body.scrollHeight) {
@@ -72,6 +72,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   public ngOnDestroy(): void {
     this._destroying$.next();
     this._destroying$.unsubscribe();
+  }
+
+  get searchControlChange$(): Observable<any> {
+    return this.searchControl.valueChanges;
   }
 
   get userProfile(): AzureProfile {
