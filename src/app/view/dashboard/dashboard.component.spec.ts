@@ -20,7 +20,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 const createSpyObj = jasmine.createSpyObj;
 
-fdescribe('DashboardComponent', () => {
+describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
   let crudServiceMock: CrudService;
@@ -345,6 +345,20 @@ fdescribe('DashboardComponent', () => {
         body.nativeElement.dispatchEvent(new Event('scroll'));
         fixture.detectChanges();
         expect(component.sketches.length).toBe(4);
+      });
+
+      it('should handle load next page error', () => {
+        (crudServiceMock.searchForSketchByPaging as jasmine.Spy).and.returnValue(throwError({
+          error: {
+            message: errorMessage
+          } as HttpErrorResponse
+        }));
+        const body = getElementByCss(fixture, '[data-testid="body"]');
+        expect(body).toBeTruthy();
+        body.nativeElement.dispatchEvent(new Event('scroll'));
+        fixture.detectChanges();
+        expect(component.isLoadingItem).toBeFalse();
+        expect(toastSvMock.error).toHaveBeenCalledWith(errorMessage);
       });
     });
   });
