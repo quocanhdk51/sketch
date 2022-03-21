@@ -197,5 +197,5 @@ describe('CardComponent', () => {
     const [del] = await menu.getItems({selector: `[data-testid="deleteBtn"]`});
     await del.click();
     expect(toastSvMock.error).toHaveBeenCalledWith(errorMessage);
-  })
+  });
 });

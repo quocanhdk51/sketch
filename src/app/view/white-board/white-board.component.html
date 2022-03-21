@@ -21,8 +21,9 @@ class="drawer-container"
       accept="image/*"
       (change)="onChangeFileInput($event)">
       <div
+      data-testid="contentPlaceholder"
       class="content-placeholder"
-      *ngIf="!isFilesUploaded()">
+      *ngIf="!isFilesUploaded">
         <button mat-icon-button>
           <mat-icon>close</mat-icon>
         </button>
@@ -34,7 +35,7 @@ class="drawer-container"
         class="upload-btn"
         >Upload Images</label>
       </div>
-      <div class="content-wrapper" *ngIf="isFilesUploaded()">
+      <div data-testid="contentWrapper" class="content-wrapper" *ngIf="isFilesUploaded">
         <div class="header">
           <button mat-flat-button (click)="fileUpload.click()">
             Upload Images
@@ -309,6 +310,7 @@ class="drawer-container"
           <mat-icon>home</mat-icon>
         </button>
         <button
+        data-testid="leftDrawerBtn"
         mat-icon-button
         [ngClass]="{'button-highlight': leftDrawer.opened}"
         (click)="leftDrawer.toggle()"
@@ -317,7 +319,7 @@ class="drawer-container"
         </button>
         <button
         mat-icon-button
-        (click)="onSave()" [disabled]="saved()">
+        (click)="onSave()" [disabled]="saved">
           <mat-icon>save</mat-icon>
         </button>
         <button

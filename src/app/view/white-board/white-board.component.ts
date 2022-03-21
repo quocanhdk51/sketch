@@ -145,6 +145,14 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  get isFilesUploaded(): boolean {
+    return this.files.length > 0;
+  }
+
+  get saved(): boolean {
+    return this.isSaved;
+  }
+
   public onHome(): void {
     if (!this.isSaved) {
       this.onSave();
@@ -190,10 +198,6 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  public saved(): boolean {
-    return this.isSaved;
-  }
-
   public undo(): void {
     this.shapes.pop();
     this.appCanvas.renderImageURL(this.sketch.imageURL as string, true);
@@ -210,10 +214,6 @@ export class WhiteBoardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public isImageHighlight(index: number): boolean {
     return this.selectedImageIndex === index;
-  }
-
-  public isFilesUploaded(): boolean {
-    return this.files.length > 0;
   }
 
   public onChangeFileInput(event: any): void {

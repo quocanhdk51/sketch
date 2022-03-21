@@ -361,7 +361,69 @@ describe('WhiteBoardComponent', () => {
         expect(palette).toBeFalsy();
       });
 
+      it('should handle files uploaded', () => {
+        const leftDrawerBtn = getElementByCss(fixture, '[data-testid="leftDrawerBtn"]');
+        expect(leftDrawerBtn).toBeTruthy();
+        leftDrawerBtn.nativeElement.click();
+        let contentPlaceholder = getElementByCss(fixture, '[data-testid="contentPlaceholder"]');
+        let contentWrapper = getElementByCss(fixture, '[data-testid="contentWrapper"]');
+        expect(contentPlaceholder).toBeTruthy();
+        expect(contentWrapper).toBeFalsy();
+        component.handleFilesUploaded([file]);
+        fixture.detectChanges();
+        expect(component.isFilesUploaded).toBeTrue();
+        contentPlaceholder = getElementByCss(fixture, '[data-testid="contentPlaceholder"]');
+        contentWrapper = getElementByCss(fixture, '[data-testid="contentWrapper"]');
+        expect(contentPlaceholder).toBeFalsy();
+        expect(contentWrapper).toBeTruthy();
+      });
 
+      it('handle file change by input', () => {
+        component.onChangeFileInput({
+          target: {
+            files: [file]
+          }
+        });
+        fixture.detectChanges();
+        expect(component.isFilesUploaded).toBeTrue();
+      });
+
+      it('handle key board event: undo', () => {
+        spyOn(component, 'undo');
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 'z', ctrlKey: true }));
+        expect(component.undo).toHaveBeenCalled();
+      });
+
+      it('handle key board event: save', () => {
+        spyOn(component, 'onSave');
+        window.dispatchEvent(new KeyboardEvent('keydown', { key: 's', ctrlKey: true }));
+        expect(component.onSave).toHaveBeenCalled();
+      });
+
+      it('handle update palette value', () => {
+        spyOn(component.appCanvas, 'render');
+        const formValue = {
+          boardWidth: 1000,
+          boardHeight: 1000,
+          color: '#32a852',
+          background: '#3236a8',
+          penSize: 12
+        };
+        component.paletteForm.setValue({
+          boardWidth: formValue.boardWidth,
+          boardHeight: formValue.boardHeight,
+          color: formValue.color,
+          background: formValue.background,
+          penSize: formValue.penSize
+        });
+        fixture.detectChanges();
+        expect(component.canvasBackground).toEqual(formValue.background);
+        expect(component.boardHeight).toEqual(formValue.boardHeight);
+        expect(component.boardWidth).toEqual(formValue.boardWidth);
+        expect(component.strokeColor).toEqual(formValue.color);
+        expect(component.strokeWidth).toEqual(formValue.penSize);
+        expect(component.appCanvas.render).toHaveBeenCalled();
+      });
     });
   });
 });

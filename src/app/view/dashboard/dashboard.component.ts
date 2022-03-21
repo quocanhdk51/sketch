@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _destroying$: Subject<void> = new Subject();
   private currentPage: number = 0;
-  private isLastPage: boolean = false;
+  private isLastPage: boolean = true;
   private _body!: HTMLDivElement;
   private profile!: AzureProfile;
   private photo!: string;
@@ -147,6 +147,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.crudService.searchForSketchByPaging(value, this.currentPage, page_size).subscribe(
       (data) => {
         this.isLastPage = data.last;
+        this.sketches = [];
         this.sketches = data.content;
         this.sketches.sort((a, b) => (a.id as number) - (b.id as number));
         this.isLoadingItem = false;
