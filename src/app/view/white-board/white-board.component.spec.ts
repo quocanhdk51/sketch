@@ -43,7 +43,7 @@ class DrawTypeMenuSelector {
 
 const createSpyObj = jasmine.createSpyObj;
 
-fdescribe('WhiteBoardComponent', () => {
+describe('WhiteBoardComponent', () => {
   let component: WhiteBoardComponent;
   let fixture: ComponentFixture<WhiteBoardComponent>;
   let routerMock: Router;
@@ -360,6 +360,8 @@ fdescribe('WhiteBoardComponent', () => {
         palette = getElementByCss(fixture, '.palette-container');
         expect(palette).toBeFalsy();
       });
+
+
     });
   });
 });
